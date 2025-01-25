@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addRoom } from "../utils/ApiFunctions";
 import RoomTypeSelector from "../common/RoomTypeSelector";
 
@@ -8,7 +8,7 @@ const AddRoom = () => {
         photo: null,
         roomType: "",
         roomPrice: ""
-    })
+    });
 
     const[imagePreview, setImagePreview] = useState("");
     const[successMessage, setSuccessMessage] = useState("");
@@ -16,14 +16,18 @@ const AddRoom = () => {
 
     const handleInputChange = (e) => {
 
-        if (e.target.name === "roomPrice") {
-            if (!isNaN(e.target.value)) {
-                e.target.value = parseInt(e.taget.value);
+        let name = e.target.name;
+        let value = e.target.value
+
+        if (name === "roomPrice") {
+            if (!isNaN(value)) {
+                value = parseInt(value);
             } else {
-                e.taget.value = "";
+                value = "";
             }
         }
-        setNewRoom({ ...newRoom, [e.target.name]: e.target.value });
+
+        setNewRoom((prev) => ({...prev, [name]: value}));
 
     };
 
@@ -31,7 +35,7 @@ const AddRoom = () => {
         const selectedImage = e.target.files[0];
         setNewRoom({...newRoom, photo: selectedImage});
         setImagePreview(URL.createObjectURL(selectedImage));
-    }
+    };
 
     const handleSubmit = async (e) => {
 
@@ -50,14 +54,29 @@ const AddRoom = () => {
         } catch (error) {
             setErrorMessage(error.message);
         }
-    }
+
+        setTimeout(() => {
+           setSuccessMessage("");
+           setErrorMessage(""); 
+        }, 3000); // in order to fade away in adherence with the className 
+    };
 
     return (
         <>
-        <section className="container, mt-5 mb-5">
+        <section className="container mt-5 mb-5">
             <div className="row justify-content-center">
-                <div className="col-md-8 col-lg-6">
+                <div className="col col-lg-4">
                     <h2 className="mt-5 mb-2">Add a new room</h2>
+                    {successMessage && (
+                        <div className="alert alert-success fade show">
+                            New room has been successfully added!
+                        </div>
+                    )}
+                    {errorMessage && (
+                        <div className="alert alert-danger fade show">
+                            Failed to save the room.
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit}>
 
                         <div className="mb-3">
@@ -74,16 +93,19 @@ const AddRoom = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="picture" className="form-label">Room Type</label>
+                            <label htmlFor="picture" className="form-label">Photo</label>
                             <input type="file" id="picture" name="picture" className="form-control" onChange={handleImage} />
                             {imagePreview && (
                                 <img src={imagePreview} alt="Preview Room Photo" style={{ maxWidth: "400px", maxHeight: "400px"}} className="mb-3" />
                             )}
                         </div>
+
                         <div className="d-grid d-md-flex mt-2">
                             <button className="btn btn-outline-primary ml-5">Save</button>
                         </div>
+
                     </form>
+                    
                 </div>
             </div>
         </section>
