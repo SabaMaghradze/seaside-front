@@ -1,4 +1,3 @@
-import { set } from 'mongoose';
 import React, { useState } from 'react'
 
 const RoomFilter = ({data, setFilteredData}) => {
@@ -28,11 +27,11 @@ const RoomFilter = ({data, setFilteredData}) => {
             </span>
             <select className='form-select' value={filter} onChange={handleChange}>
                 <option value={""}>Select a room type to filter...</option>
-                {roomTypes.map((type, value) => {
+                {roomTypes.map((type, index) => (
                     <option key={index} value={type}>
                         {type}
                     </option>
-                })}
+                ))}
             </select>
             <button className='btn btn-hotel' type='button' onClick={clearFilter}>Clear Filter</button>
         </div>
