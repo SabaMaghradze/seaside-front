@@ -54,11 +54,12 @@ const ExistingRooms = () => {
     async function handleDelete(roomId) {
         try {
             const result = await deleteRoom(roomId);
-            if (result == "") { // we will not be returning anything from the back-end so it should be empty string.
+            
+            if (result?.message === "success") { // we will not be returning anything from the back-end so it should be empty string.
                 setSuccessMessage(`Room with ID ${roomId} has been successfully deleted`);
-                fetchRooms();    
+                await fetchRooms();    
             } else {
-                console.error(`Error O.F. deleting room with ID ${roomId}`);
+                console.error(`Unexpected response while deleting room: ${result}`);
             }
         } catch (error) {
             setErrorMessage(error.message);

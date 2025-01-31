@@ -10,7 +10,7 @@ const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
     useEffect(() => {
         getAllRoomTypes()
             .then((data) => {
-            console.log("room types: " + data);
+            // console.log("room types: " + data);
             setRoomTypes(data);
         }) 
         .catch((error) => {
