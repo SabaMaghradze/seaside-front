@@ -9,7 +9,7 @@ export const api = axios.create({
 export async function addRoom(photo, roomType, roomPrice) {
 
     const formData = new FormData();
-    
+
     formData.append("picture", photo);
     formData.append("roomType", roomType);
     formData.append("roomPrice", roomPrice);
@@ -17,7 +17,7 @@ export async function addRoom(photo, roomType, roomPrice) {
     const response = await api.post("/rooms/add/new-room", formData);
 
     if (response.status === 201) {
-        return true; 
+        return true;
     } else {
         return false;
     }
@@ -51,4 +51,22 @@ export async function deleteRoom(roomId) {
     } catch (error) {
         throw new Error("Error deleting room");
     }
+}
+
+export async function getRoomById(roomId) {
+    try {
+        const result = await api.get(`/rooms/room/${roomId}`);
+        return result.data;
+    } catch (error) {
+        throw new Error("Error fetching room with id " + roomId);
+    }
+}
+
+export async function updateRoom(roomId, roomData) {
+    const formData = new FormData();
+    formData.append("roomType", roomData.roomType);
+    formData.append("roomPrice", roomData.roomPrice);
+    formData.append("photo", roomData.photo);
+    const result = await api.put(`/rooms/update/${roomId}`);
+    return result;
 }
