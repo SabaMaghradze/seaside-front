@@ -113,15 +113,14 @@ const EditRoom = () => {
                                     <img src={imagePreview} alt="Preview Room Photo" style={{ maxWidth: "400px", maxHeight: "400px" }} className="mb-3" />
                                 )}
                             </div>
-                            <div className='d-md-flex mt-2'>
+                            <div className='d-grid gap-2 d-md-flex mt-2'>
                                 <Link to={"/existing-rooms"} className='btn btn-outline-info ml-5'>Back</Link>
+
+                                <button type='submit' className='btn btn-outline-warning'>
+                                    Edit Room
+                                </button>
                             </div>
-                            <button type='submit' className='btn btn-outline-warning'>
-                                Edit Room
-                            </button>
-
                         </form>
-
                     </div>
                 </div>
             </section>
