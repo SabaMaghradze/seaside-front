@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { getRoomById, updateRoom } from '../utils/ApiFunctions';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import RoomTypeSelector from '../common/RoomTypeSelector';
 
 // resembles AddRoom component to a large extent, so most code pieces are copied from there.
 
@@ -21,7 +22,8 @@ const EditRoom = () => {
     const { roomId } = useParams();
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const name = e.target.name;
+        const value = e.target.value;
         setRoom({ ...room, [name]: value });
     }
 
@@ -41,8 +43,10 @@ const EditRoom = () => {
 
     const handleImage = (e) => {
         const selectedImage = e.target.files[0];
-        setRoom({ ...newRoom, photo: selectedImage });
-        setImagePreview(URL.createObjectURL(selectedImage));
+        if (selectedImage) {
+            setRoom({ ...room, photo: selectedImage });
+            setImagePreview(URL.createObjectURL(selectedImage));
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -53,7 +57,6 @@ const EditRoom = () => {
             const response = await updateRoom(roomId, room);
             if (response.status === 200) {
                 setSuccessMessage("Room updated successfully");
-
                 const updatedRoomData = await getRoomById(roomId);
                 setRoom(updatedRoomData);
                 setImagePreview(updatedRoomData.photo);
@@ -61,11 +64,15 @@ const EditRoom = () => {
             } else {
                 setErrorMessage("Failed to update room");
             }
-
         } catch (error) {
             console.error(error);
             setErrorMessage(error.message);
         }
+
+        setTimeout(() => {
+            setSuccessMessage("");
+            setErrorMessage("");
+        }, 3000);
     }
 
     return (
@@ -106,7 +113,7 @@ const EditRoom = () => {
                                     <img src={imagePreview} alt="Preview Room Photo" style={{ maxWidth: "400px", maxHeight: "400px" }} className="mb-3" />
                                 )}
                             </div>
-                            <div className='d-grid gap-2 d-md-flex mt-2'>
+                            <div className='d-md-flex mt-2'>
                                 <Link to={"/existing-rooms"} className='btn btn-outline-info ml-5'>Back</Link>
                             </div>
                             <button type='submit' className='btn btn-outline-warning'>
