@@ -1,127 +1,128 @@
 body {
-  min-height: 100vh;
-  padding-bottom: 50px;
+  min-height: 100vh !important;
+  padding-bottom: 50px !important;
 }
 
 .card {
-  opacity: 0.9;
+  opacity: 0.9 !important;
 }
 
 /* Navigation bar definitions */
 .navbar {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .navbar .navbar-nav .nav-link {
-  padding: 1em;
+  padding: 1em !important;
 }
 
 .navbar .navbar-nav .nav-item {
-  position: relative;
+  position: relative !important;
 }
 
 .navbar .navbar-nav .nav-item::after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  content: '';
-  background-color: rgb(169, 77, 123);
-  width: 0;
-  margin: 0 auto;
-  height: 4px;
-  transition: all .5s;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  content: '' !important;
+  background-color: rgb(169, 77, 123) !important;
+  width: 0 !important;
+  margin: 0 auto !important;
+  height: 4px !important;
+  transition: all .5s !important;
 }
 
 .navbar .navbar-nav .nav-item:hover::after {
-  width: 100%;
+  width: 100% !important;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgb(25, 24, 24);
+  color: rgb(25, 24, 24) !important;
 }
 
 .navbar-dark .navbar-brand {
-  color: rgb(25, 24, 24);
+  color: rgb(25, 24, 24) !important;
 }
 
 @media screen and (min-width: 992px) {
   .navbar {
-    padding: 0;
+    padding: 0 !important;
   }
 
   .navbar .navbar-nav .nav-link {
-    padding: 1em 0;
+    padding: 1em 0 !important;
   }
 
   .navbar .navbar-nav .nav-item {
-    margin: 0 1em;
+    margin: 0 1em !important;
   }
 }
 
 /* Hotel custom color */
 .btn-hotel {
-  background-color: rgb(169, 77, 123);
-  color: #fff;
+  background-color: rgb(169, 77, 123) !important;
+  color: #fff !important;
 }
 
 .btn-hotel:hover {
-  background-color: rgb(137, 127, 132);
-  color: #fff;
-  transition: 0.7s;
-  outline-color: transparent;
-  outline-style: solid;
+  background-color: rgb(137, 127, 132) !important;
+  color: #fff !important;
+  transition: 0.7s !important;
+  outline-color: transparent !important;
+  outline-style: solid !important;
 
 }
 
 .hotel-color {
-  color: rgb(169, 77, 123);
+  text-decoration: none;
+  color: rgb(169, 77, 123) !important;
 }
 
 .room-price {
-  color: darkgoldenrod;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: medium;
+  color: darkgoldenrod !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  font-size: medium !important;
 }
 
 .vertical-rule {
-  border-left: '0.5px solid black';
-  height: '100vh'
+  border-left: '0.5px solid black' !important;
+  height: '100vh' !important;
 }
 
 
 
 .parallax {
-  background-image: url("./assets/images/nightPhoto.jpg");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 50vh;
+  background-image: url("./assets/images/nightPhoto.jpg") !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  height: 50vh !important;
 }
 
 .header {
-  position: relative;
-  height: 150px;
-  background-size: cover;
-  background-image: url("./assets/images/secondPhoto.avif");
-  background-position: center center;
+  position: relative !important;
+  height: 150px !important;
+  background-size: cover !important;
+  background-image: url("./assets/images/secondPhoto.avif") !important;
+  background-position: center center !important;
 }
 
 .header-title {
-  color: #fff;
-  font-size: 4rem;
-  align-content: center;
+  color: #fff !important;
+  font-size: 4rem !important;
+  align-content: center !important;
 }
 
 .parallax {
-  margin-top: 50px;
-  color: white;
-  text-shadow: 2px 2px black;
+  margin-top: 50px !important;
+  color: white !important;
+  text-shadow: 2px 2px black !important;
 }
 
 .animated {
-  animation-duration: 1s;
+  animation-duration: 1s !important;
 }
 
 .animated-texts h1 {
@@ -142,34 +143,34 @@ h2 {
   60%,
   80%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+    transform: translate3d(0, 0, 0) 
   }
 
   40%,
   60% {
     animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0) 
   }
 
   70% {
     animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0) 
   }
 
   90% {
-    transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0)
   }
 }
 
 .bounceIn {
-  animation-name: bounceIn;
+  animation-name: bounceIn
 }
 
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0)
   }
 
   to {
@@ -202,7 +203,7 @@ h2 {
 
 .overlay-content {
   position: absolute;
-  top: 50%;
+  top: 50% ;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
@@ -211,36 +212,36 @@ h2 {
 
 /* The header banner */
 .header-banner {
-  background-image: url("./assets/images/hotelPhoto.jpg");
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  height: 80vh;
+  background-image: url("./assets/images/hotelPhoto.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  position: relative !important;
+  height: 80vh !important;
 }
 
 .header-banner {
-  position: relative;
-  height: 500px;
+  position: relative !important;
+  height: 500px !important;
 }
 
 @media only screen and (max-width: 768px) {
   .header-banner h1 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
 }
 
 @media only screen and (max-width: 480px) {
   .header-banner h1 {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
 
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #f5f5f5;
-  height: 60px;
-  text-align: center;
+  position: fixed !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  background-color: #f5f5f5 !important;
+  height: 60px !important;
+  text-align: center !important;
 }

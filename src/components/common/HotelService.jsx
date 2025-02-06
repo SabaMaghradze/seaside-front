@@ -11,7 +11,7 @@ const HotelService = () => {
                 <Header title={"Our Services"} />
 
                 <Row>
-                    <h4 className='text-center'>
+                    <h4 className='text-center mt-5'>
                         Services at <span className='hotel-color'>Seaside Hotel </span>
                         <span className='gap-2'>
                             <FaClock /> - 24 Hour Front Desk

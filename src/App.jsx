@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import './index.css'
 import AddRoom from './components/room/AddRoom';
 import EditRoom from './components/room/EditRoom';
 import ExistingRooms from './components/room/ExistingRooms';
