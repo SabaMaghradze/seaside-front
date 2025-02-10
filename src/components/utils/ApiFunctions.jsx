@@ -45,8 +45,6 @@ export async function getAllRooms() {
 export async function deleteRoom(roomId) {
     try {
         const response = await api.delete(`/rooms/deleteRoom/${roomId}`);
-        console.log(response);
-        console.log(response.data)
         return response.data;
     } catch (error) {
         throw new Error("Error deleting room");
@@ -69,4 +67,40 @@ export async function updateRoom(roomId, roomData) {
     formData.append("picture", roomData.photo);
     const result = await api.put(`/rooms/update/${roomId}`, formData);
     return result;
+}
+
+export async function getAllBookings() {
+    try {
+        const result = await api.get(`/bookings/all-bookings`);
+        return result.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch all bookings: ${error.message}`);
+    }
+}
+
+export async function saveBooking(roomId, booking) {
+    try {
+        const response = await api.post(`/bookings/room/${roomId}/booking`, booking);
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to book room ${roomId}: ${error.message}`);
+    }
+}
+
+export async function getBookingByConfirmationCode(confirmationCode) {
+    try {
+        const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
+        return result.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch the booking with confirmation code of ${confirmationCode}: ${error.message}`);
+    }
+}
+
+export async function deleteBooking(bookingId) {
+    try {
+        const response = await api.delete(`/bookings/${bookingId}/delete`);
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to cancel booking with id ${bookingId}: ${error.message}`);
+    }
 }
