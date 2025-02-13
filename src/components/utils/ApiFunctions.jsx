@@ -83,7 +83,7 @@ export async function saveBooking(roomId, booking) {
         const response = await api.post(`/bookings/room/${roomId}/booking`, booking);
         return response.data;
     } catch (error) {
-        throw new Error(`Failed to book room ${roomId}: ${error.message}`);
+        throw new Error(`Failed to book room ${roomId}: ${error.response?.data}`);
     }
 }
 

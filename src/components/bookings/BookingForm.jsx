@@ -92,10 +92,10 @@ const BookingForm = () => {
         try {
             const confirmationCode = await saveBooking(roomId, booking);
             setIsSubmitted(true);
-            navigate("/", { state: { message: confirmationCode } });
+            navigate("/booking-success", { state: { message: confirmationCode } });
         } catch (error) {
-            setErrorMessage(error.message);
-            navigate("/", { state: { message: errorMessage } })
+            const errorMessage = error.message.replace(/^Error:\s*/, ''); // removes "Error:" prefix from the message;
+            navigate("/booking-success", { state: { errorMsg: errorMessage } })
         }
     }
 
