@@ -36,6 +36,10 @@ export async function getAllRoomTypes() {
 export async function getAllRooms() {
     try {
         const response = await api.get("/rooms/all-rooms");
+        // console.log(`response`);
+        // console.log(response);
+        // console.log(`response.data`);
+        // console.log(response?.data);
         return response.data;
     } catch (error) {
         throw new Error("Error fetching rooms");
