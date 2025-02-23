@@ -14,6 +14,7 @@ import Admin from './components/admin/Admin';
 import Checkout from './components/bookings/Checkout';
 import BookingSuccess from './components/bookings/BookingSuccess';
 import Bookings from './components/bookings/Bookings';
+import FindMyBooking from './components/bookings/FindMyBooking';
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
             <Route path='/book-room/:roomId' element={<Checkout />} />
             <Route path='/booking-success' element={<BookingSuccess />} />
             <Route path='/existing-bookings' element={<Bookings />} />
-          
+            <Route path='/find-booking' element={<FindMyBooking />} />
           </Routes>
         </Router>
         <Footer />
