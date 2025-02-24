@@ -34,11 +34,8 @@ const FindMyBooking = () => {
             const data = await getBookingByConfirmationCode(confirmationCode);
             setBooking(data);
         } catch (error) {
-            if (error.response && error.response.status == 404) {
-                setError(error.response.data.message);
-            } else {
-                setError(error.response);
-            }
+            const errorMessage = error.message.replace(/^Error:\s*/, '');
+            setError(errorMessage);
         }
         setTimeout(() => {
             setIsLoading(false);
@@ -74,7 +71,7 @@ const FindMyBooking = () => {
             <div className='container mt-5 d-flex flex-column text-start'>
                 <h2>Find booking</h2>
                 <form onSubmit={handleSubmit} className='col-md-6'>
-                    <div className='input-group'>
+                    <div className='input-group mb-3'>
                         <input type="text" className='form-control' id='confirmationCode' name='confirmationCode' value={confirmationCode} onChange={handleInputChange} placeholder='Enter confirmation code' />
                         <button className='btn btn-hotel input-group-text'>Find Booking</button>
                     </div>
@@ -82,7 +79,7 @@ const FindMyBooking = () => {
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : error ? (
-                    <h3 className='text-daner mt-3'>{error}</h3>
+                    <h3 className='text-danger mt-3'>{error}</h3>
                 ) : succMsg ? (
                     <h3 className='text-success mt-3'>{succMsg}</h3>
                 ) : (

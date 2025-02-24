@@ -96,7 +96,7 @@ export async function getBookingByConfirmationCode(confirmationCode) {
         const result = await api.get(`/bookings/confirmation/${confirmationCode}`);
         return result.data;
     } catch (error) {
-        throw new Error(`Failed to fetch the booking with confirmation code of ${confirmationCode}: ${error.message}`);
+        throw new Error(`Failed to fetch the booking with confirmation code of ${confirmationCode}`);
     }
 }
 
@@ -106,5 +106,14 @@ export async function deleteBooking(bookingId) {
         return response.data;
     } catch (error) {
         throw new Error(`Failed to cancel booking with id ${bookingId}: ${error.message}`);
+    }
+}
+
+export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
+    try {
+        const result = await api.get(`rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
+        return result;
+    } catch (error) {
+        throw new Error(`Failed to send request to /rooms/available-rooms: ${error.message}`);
     }
 }
