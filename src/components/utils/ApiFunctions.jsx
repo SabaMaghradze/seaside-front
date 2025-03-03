@@ -111,9 +111,62 @@ export async function deleteBooking(bookingId) {
 
 export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
     try {
-        const result = await api.get(`rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
+        const result = await api.get(`/rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
         return result;
     } catch (error) {
         throw new Error(`Failed to send request to /rooms/available-rooms: ${error.message}`);
+    }
+}
+
+export async function register(registration) {
+    try {
+        const response = await api.post("/auth/register", registration);
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to register user: ${error.message}`);
+    }
+}
+
+export async function getHeader() {
+    const token = localStorage.getItem("token");
+    return {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+    }
+}
+
+export async function login(login) {
+    try {
+        const response = await api.post("/auth/login", login);
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to log in: ${error.message}`);
+    }
+}
+
+export async function getUserProfile(userId, token) {
+    try {
+        const response = await api.get(`/users/profile/${userId}`, { headers: getHeader() });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+export async function deleteUserById(userId) {
+    try {
+        const response = await api.delete(`/users/delete/${userId}`, { headers: getHeader() });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message)  
+    }
+}
+
+export async function getBookingsByUserId(userEmail) {
+    try {
+        const response = await api.get(`/bookings/user/${userEmail}`, { headers: getHeader() });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message);
     }
 }
