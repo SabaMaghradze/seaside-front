@@ -1,11 +1,10 @@
-import React from "react";
 import axios from "axios";
 
 export const api = axios.create({
     baseURL: "http://localhost:8080"
 });
 
-// adds a new room to the database
+
 export async function addRoom(photo, roomType, roomPrice) {
 
     const formData = new FormData();
@@ -23,7 +22,6 @@ export async function addRoom(photo, roomType, roomPrice) {
     }
 }
 
-// fetches all room types from the database
 export async function getAllRoomTypes() {
     try {
         const response = await api.get("/rooms/room-types");
@@ -36,10 +34,6 @@ export async function getAllRoomTypes() {
 export async function getAllRooms() {
     try {
         const response = await api.get("/rooms/all-rooms");
-        // console.log(`response`);
-        // console.log(response);
-        // console.log(`response.data`);
-        // console.log(response?.data);
         return response.data;
     } catch (error) {
         throw new Error("Error fetching rooms");
@@ -118,16 +112,17 @@ export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
     }
 }
 
-export async function register(registration) {
+export async function register(registrationData) {
     try {
-        const response = await api.post("/auth/register", registration);
+        const response = await api.post("/auth/register", registrationData);
         return response.data;
     } catch (error) {
-        throw new Error(`Failed to register user: ${error.message}`);
+        console.log(error);
+        throw new Error(`Failed to register user: ${error?.response.data}`);
     }
 }
 
-export async function getHeader() {
+export function getHeader() {
     const token = localStorage.getItem("token");
     return {
         Authorization: `Bearer ${token}`,
@@ -135,21 +130,21 @@ export async function getHeader() {
     }
 }
 
-export async function login(login) {
+export async function loginUser(userData) {
     try {
-        const response = await api.post("/auth/login", login);
+        const response = await api.post("/auth/login", userData);
         return response.data;
     } catch (error) {
         throw new Error(`Failed to log in: ${error.message}`);
     }
 }
 
-export async function getUserProfile(userId, token) {
+export async function getUser(email, token) {
     try {
-        const response = await api.get(`/users/profile/${userId}`, { headers: getHeader() });
+        const response = await api.get(`/users/${email}`, { headers: getHeader() });
         return response.data;
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error?.response.data || error.message);
     }
 }
 
@@ -158,15 +153,15 @@ export async function deleteUserById(userId) {
         const response = await api.delete(`/users/delete/${userId}`, { headers: getHeader() });
         return response.data;
     } catch (error) {
-        throw new Error(error.message)  
+        throw new Error(error?.response.data || error.message);
     }
 }
 
 export async function getBookingsByUserId(userEmail) {
     try {
-        const response = await api.get(`/bookings/user/${userEmail}`, { headers: getHeader() });
+        const response = await api.get(`/bookings/user/${userEmail}/bookings`, { headers: getHeader() });
         return response.data;
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error?.response.data || error.message);
     }
 }

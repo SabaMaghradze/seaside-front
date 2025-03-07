@@ -4,44 +4,45 @@ import { Link } from 'react-router-dom';
 
 const Registration = () => {
 
-    const [registration, setRegistration] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
-    })
+	const [registration, setRegistration] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: ""
+	})
 
-    const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+	const [error, setError] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
 
-    function handleInputChange(e) {
-        setRegistration({ ...registration, [e.target.name]: e.target.value });
-    }
+	function handleInputChange(e) {
+		setRegistration({ ...registration, [e.target.name]: e.target.value });
+	}
 
-    async function handleSubmit(e) {
+	async function handleSubmit(e) {
 
-        e.preventDefault();
+		e.preventDefault();
 
-        try {
-            const result = await register(registration);
-            setSuccessMessage("Registration successful!");
-            setError("");
-            setRegistration({ firstName: "", lastName: "", email: "", password: "" });
-        } catch (error) {
-            setSuccessMessage("");
-            setError(error.message);
-        };
+		try {
+			await register(registration);
+			setSuccessMessage("Registration successful!");
+			setError("");
+			setRegistration({ firstName: "", lastName: "", email: "", password: "" });
+		} catch (error) {
+			console.log(error.message);
+			setSuccessMessage("");
+			setError(error.message);
+		};
 
-        setTimeout(() => {
-            setError("");
-            setSuccessMessage("");
-        }, 3000);
-        
-    }
+		setTimeout(() => {
+			setError("");
+			setSuccessMessage("");
+		}, 3000);
 
-    return (
+	}
+
+	return (
 		<section className="container col-6 mt-5 mb-5">
-            
+
 			{error && <p className="alert alert-danger">{error}</p>}
 			{successMessage && <p className="alert alert-success">{successMessage}</p>}
 
@@ -49,7 +50,7 @@ const Registration = () => {
 			<form onSubmit={handleSubmit}>
 				<div className="mb-3 row">
 					<label htmlFor="firstName" className="col-sm-2 col-form-label">
-						first Name
+						Firstname
 					</label>
 					<div className="col-sm-10">
 						<input
@@ -65,11 +66,11 @@ const Registration = () => {
 
 				<div className="mb-3 row">
 					<label htmlFor="lastName" className="col-sm-2 col-form-label">
-						Last Name
+						Lastname
 					</label>
 					<div className="col-sm-10">
 						<input
-							id="lastName"
+							id="lastName" 
 							name="lastName"
 							type="text"
 							className="form-control"

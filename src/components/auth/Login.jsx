@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode"
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthProvider';
+import { Form, FormControl } from 'react-bootstrap';
+import { loginUser } from '../utils/ApiFunctions';
 
 const Login = () => {
 
@@ -11,30 +13,32 @@ const Login = () => {
     });
 
     const navigate = useNavigate();
+	const auth = useAuth();
+	const location = useLocation();
+	const redirectUrl = location.state?.path || "/";
     
     function handleInputChange(e) {
         setLogin({ ...login, [e.target.name]: e.target.value })
     }
 
+    async function handleSubmit(e) {
 
-    async function handleLogin(e) {
-        e.preventDefault();
-        const data = await login(login);
+		e.preventDefault();
 
-        if (data) {
+		try {
+			const data = await loginUser(login);
 
-            const token = data.token;
-            const decodedToken = jwtDecode(token);
+			if (data) {
+				const token = data.token;
+				auth.handleLogin(token);
+				navigate(redirectUrl, { replace: true });
+				// window.location.reload();
+			} 
+			
+		} catch (error) {
+			setErrorMessage("Invalid username or password, please try again.");
+		}
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("userId", decodedToken.sub);
-            localStorage.setItem("userRole", decodedToken.roles.join(","));
-
-            navigate("/");
-            window.location.reload();
-        } else {
-            setErrorMessage("Invalid username or password, please try again");
-        }
         setTimeout(() => {
             setErrorMessage("")
         }, 4000);
@@ -46,13 +50,14 @@ const Login = () => {
             {errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
 			<h2>Login</h2>
 
-            <form onSubmit={handleLogin}>
-				<div className="row mb-3">
-					<label htmlFor="email" className="col-sm-2 col-form-label">
+            <Form onSubmit={handleSubmit}>
+				<Form.Group className="row mb-3">
+					<Form.Label htmlFor="email" className="col-form-label text-start">
 						Email
-					</label>
+					</Form.Label>
 					<div>
-						<input
+						<FormControl
+							required
 							id="email"
 							name="email"
 							type="email"
@@ -61,14 +66,14 @@ const Login = () => {
 							onChange={handleInputChange}
 						/>
 					</div>
-				</div>
+				</Form.Group>
 
-				<div className="row mb-3">
-					<label htmlFor="password" className="col-sm-2 col-form-label">
+				<Form.Group className="row mb-3">
+					<Form.Label htmlFor="password" className="text-start">
 						Password
-					</label>
+					</Form.Label>
 					<div>
-						<input
+						<FormControl
 							id="password"
 							name="password"
 							type="password"
@@ -77,17 +82,17 @@ const Login = () => {
 							onChange={handleInputChange}
 						/>
 					</div>
-				</div>
+				</Form.Group>
 
-				<div className="mb-3">
+				<div className="mb-3 text-start">
 					<button type="submit" className="btn btn-hotel" style={{ marginRight: "10px" }}>
 						Login
 					</button>
 					<span style={{ marginLeft: "10px" }}>
-						Don't' have an account yet?<Link to={"/register"}> Register</Link>
+						Don't have an account yet?<Link to={"/register"}> Register</Link>
 					</span>
 				</div>
-			</form>
+			</Form>
 
         </section>
     )

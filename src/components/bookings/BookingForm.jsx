@@ -7,6 +7,8 @@ import BookingSummary from './BookingSummary';
 
 const BookingForm = () => {
 
+    const currentUser = localStorage.getItem("userId");
+
     const [isValidated, setIsValidated] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -16,7 +18,7 @@ const BookingForm = () => {
 
     const [booking, setBooking] = useState({
         guestFullName: "",
-        guestEmail: "",
+        guestEmail: currentUser,
         checkInDate: "",
         checkOutDate: "",
         numOfChildren: 0,

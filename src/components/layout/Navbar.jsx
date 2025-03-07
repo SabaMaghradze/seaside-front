@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { NavLink } from 'react-bootstrap'
+import React, { useContext, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import Logout from '../auth/Logout';
+import { AuthContext } from '../auth/AuthProvider';
 
 const Navbar = () => {
 
@@ -9,6 +10,10 @@ const Navbar = () => {
     const handleShowAcc = () => {
         setShowAccount(!showAccount);
     }
+
+    const { user } = useContext(AuthContext);
+    const isLoggedIn = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
 
     return (
         <nav className='navbar navbar-expand-lg bg-body-tertiary px-5 shadow mt-5 sticky-top'>
@@ -36,11 +41,13 @@ const Navbar = () => {
                                 Browse all rooms
                             </Link>
                         </li>
-                        <li className='nav-item'>
-                            <Link className='nav-link' aria-current="page" to={"/admin"}>
-                                Admin
-                            </Link>
-                        </li>
+                        {isLoggedIn && userRole == "ROLE_ADMIN" && (
+                            <li className='nav-item'>
+                                <NavLink className='nav-link' aria-current="page" to={"/admin"}>
+                                    Admin
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
 
                     <ul className='d-flex navbar-nav'>
@@ -51,34 +58,27 @@ const Navbar = () => {
                         </li>
                         <li className='nav-item dropdown'>
                             <a className={`nav-link dropdown-toggle ${showAccount ? "show" : ""}`}
-                            href='#'
-                            role='button'
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            onClick={handleShowAcc}>
+                                href='#'
+                                role='button'
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onClick={handleShowAcc}>
                                 {" "}
                                 Account
                             </a>
                             <ul className={`dropdown-menu ${showAccount ? "show" : ""}`}
-                            aria-labelledby='navbarDropdown'>
-                                <li>
-                                    <Link to={"/login"} className='dropdown-item'>
-                                        Login
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to={"/profile"} className='dropdown-item'>
-                                        Profile
-                                    </Link>
-                                </li>
-                                <li>
-                                    <hr className='dropdown-divider'/>
-                                </li>
-                                <li>
-                                    <Link to={"/logout"} className='dropdown-item'>
-                                        Logout
-                                    </Link>
-                                </li>
+                                aria-labelledby='navbarDropdown'>
+                                {isLoggedIn ? (
+                                    <li>
+                                        <Logout />
+                                    </li>
+                                ) : (
+                                    <li>
+                                        <Link to={"/login"} className='dropdown-item'>
+                                            Login
+                                        </Link>
+                                    </li>
+                                )}                
                             </ul>
                         </li>
                     </ul>
